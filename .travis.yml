@@ -1,0 +1,31 @@
+language: go
+dist: xenial
+go: "1.x.x"
+
+env:
+    global:
+      - DOCKER_REPO=innovate/geo-server
+
+stages:
+- name: test
+- name: release
+  if: tag IS present
+
+jobs:
+  include:
+  - stage: test
+    name: Go Tests
+    language: go
+    script:
+      - go vet ./...
+      - go test -v ./...
+  - stage: release
+    name: "Release"
+    script: curl -sL https://git.io/goreleaser | bash
+  - stage: release
+    name: "Release to docker"
+    script: 
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - docker build -t $DOCKER_REPO:$TRAVIS_TAG ./
+      - docker push $DOCKER_REPO:$TRAVIS_TAG
+      - docker tag $DOCKER_REPO:$TRAVIS_TAG $DOCKER_REPO:latest; docker push $DOCKER_REPO:latest;
