@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 
@@ -62,6 +63,7 @@ func (s *server) GetGeoInfo(ctx context.Context, in *pb.GeoInfoRequest) (*pb.Geo
 }
 
 func main() {
+	fmt.Println("Geo Server")
 	var c config
 	err := envconfig.Process("geoserver", &c)
 	if err != nil {
