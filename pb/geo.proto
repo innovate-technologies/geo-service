@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+package geo;
+
+service Geo {
+  rpc GetGeoInfo (GeoInfoRequest) returns (GeoInfoReply) {}
+}
+
+message GeoInfoRequest {
+  string ip = 1;
+}
+
+message GeoInfoReply {
+  message NAMES {
+    string de = 1;
+    string en = 2;
+    string es = 3;
+    string fr = 4;
+    string ja = 5;
+    string pt = 6;
+    string ru = 7;
+    string zh = 8;
+  }
+
+  message CITY {
+    uint64 geoname_id = 1;
+    NAMES names = 2;
+  }
+
+  CITY city = 1;
+
+  message CONTINENT {
+    string code = 1;
+    uint64 geoname_id = 2;
+    NAMES names = 3;
+  }
+
+  CONTINENT continent = 2;
+
+  message COUNTRY {
+    uint64 geoname_id = 1;
+    bool is_in_european_union = 2;
+    string iso_code = 3;
+
+    NAMES names = 4;
+  }
+
+  COUNTRY country = 3;
+
+  message LOCATION {
+    uint32 accuracy_radius = 1;
+    double latitude = 2;
+    double longitude = 3;
+    string time_zone = 4;
+  }
+
+  LOCATION location = 4;
+
+  message POSTAL {
+    string code = 1;
+  }
+
+  POSTAL postal = 5;
+
+  message REGISTERED_COUNTRY {
+    uint64 geoname_id = 1;
+    bool is_in_european_union = 2;
+    string iso_code = 3;
+    NAMES names = 4;
+  }
+
+  REGISTERED_COUNTRY registered_country = 6;
+
+  message SUBDIVISIONS {
+    uint64 geoname_id = 1;
+    string iso_code = 2;
+    NAMES names = 3;
+  }
+
+  repeated SUBDIVISIONS subdivisions = 7;
+}
+
