@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package geo;
 
+option go_package = "pb";
+
 service Geo {
   rpc GetGeoInfo (GeoInfoRequest) returns (GeoInfoReply) {}
 }
