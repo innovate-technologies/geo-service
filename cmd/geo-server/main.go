@@ -6,8 +6,8 @@ import (
 	"net"
 
 	"github.com/innovate-technologies/geo-service/pb"
+	"github.com/kelseyhightower/envconfig"
 	"github.com/oschwald/geoip2-golang"
-	"github.com/src-d/envconfig"
 	"google.golang.org/grpc"
 )
 
